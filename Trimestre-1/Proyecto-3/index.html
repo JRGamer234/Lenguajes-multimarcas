@@ -10,11 +10,13 @@
 
     <form action="">
         <label for="inputUser">Usuario: </label>
-      <input type="text" name="user" id="user"/>
+      <input type="text" name="user" id="user" minlength="5" maxlength="10"/>
       <br>Contraseña:
-      <input type="password" name="passw"/>
+      <input type="password" name="passw" required/>
+      <br>Email:
+      <input type="email" name="mail" id="inputMail" required/>
       <br>
-      <input type="submit" value="Entrar" />
+      <input type="submit" value="Entrar" required/>
     </form>
   </body>
 </html>
