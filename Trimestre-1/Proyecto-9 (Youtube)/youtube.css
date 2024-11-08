@@ -3,7 +3,7 @@ body {
 }
 
 header {
-    background-color: red;
+    background-color: aliceblue;
     height: 5vh;
     display: flex;
     justify-content: space-between;
@@ -11,7 +11,7 @@ header {
 }
 
 header > div {
-    background-color: green;
+
 }
 
 header > div:first-child {
