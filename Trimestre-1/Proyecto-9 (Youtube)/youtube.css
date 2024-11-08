@@ -1,0 +1,47 @@
+body {
+    margin: 0;
+}
+
+header {
+    background-color: red;
+    height: 5vh;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 10px;
+}
+
+header > div {
+    background-color: green;
+}
+
+header > div:first-child {
+    display: flex;
+    gap: 10px;
+}
+
+header img {
+    height: 100%;
+}
+
+.icon-menu-container {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+    border-radius: 50%;
+    width: 4vh;
+    height: 4vh;
+    cursor: pointer;
+}
+
+.icon-menu-container:hover {
+    background-color: #f2f2f2;
+}
+
+.icon-menu-container > div {
+    width: 50%;
+    height: 2px;
+    background-color: black;
+}
