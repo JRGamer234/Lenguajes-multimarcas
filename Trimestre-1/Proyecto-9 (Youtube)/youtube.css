@@ -1,17 +1,23 @@
 body {
     margin: 0;
+    height: 1500px;
 }
 
 header {
-    background-color: aliceblue;
-    height: 5vh;
+    height: 4.5vh;
     display: flex;
     justify-content: space-between;
     padding: 5px 10px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: red;
 }
 
 header > div {
-
+    /* background-color: yellow; */
+    width: 20vw;
 }
 
 header > div:first-child {
@@ -19,8 +25,39 @@ header > div:first-child {
     gap: 10px;
 }
 
+header > div:last-child {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
 header img {
     height: 100%;
+}
+
+form {
+    display: flex;
+}
+
+form > input {
+    border: 1px solid grey;
+    font-size: 1em;
+}
+
+form > input[type='text'] {
+    border-top-left-radius: 100px;
+    border-bottom-left-radius: 100px;
+    padding: 0 15px;
+    width: 25vw;
+}
+
+form > input[type='submit'] {
+    border-top-right-radius: 100px;
+    border-bottom-right-radius: 100px;
+    padding: 0 25px 0 20px;
+    border-left: 0;
+    cursor: pointer;
 }
 
 .icon-menu-container {
@@ -44,4 +81,38 @@ header img {
     width: 50%;
     height: 2px;
     background-color: black;
+}
+
+.container-perfil {
+    width: 4vh;
+    height: 4vh;
+    background-color: green;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.liz{
+    background-color: beige;
+    width: 15vw;
+    position: fixed;
+    top: calc(4.5vh + 10px);
+    bottom: 0;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+}
+
+a:hover {
+    display: inline-block;
+    padding: 10px;
+    background-color: gray;
+    color: white;
+    border-radius: 10px;
+    text-decoration: none;
 }
