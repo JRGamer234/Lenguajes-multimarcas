@@ -116,3 +116,20 @@ a:hover {
     border-radius: 10px;
     text-decoration: none;
 }
+
+.bari{
+    background-color: plum;
+    height: 5vh;
+    margin-top: 6vh;
+    margin-left: 15vw;
+}
+
+.listas{
+    list-style-type: none;
+    text-align: center;
+    display: flex;
+}
+.bari>ul:hover{
+    display: flex;
+    background-color: gray;
+}
