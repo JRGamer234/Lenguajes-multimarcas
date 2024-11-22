@@ -1,10 +1,15 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
     height: 1500px;
 }
 
 header {
-    height: 4.5vh;
+    background-color: white;
+    height: 5vh;
     display: flex;
     justify-content: space-between;
     padding: 5px 10px;
@@ -12,7 +17,6 @@ header {
     top: 0;
     left: 0;
     right: 0;
-    background-color: red;
 }
 
 header > div {
@@ -60,6 +64,105 @@ form > input[type='submit'] {
     cursor: pointer;
 }
 
+nav {
+    background-color: white;
+    position: fixed;
+    left: 0;
+    top: 5vh;
+    bottom: 0;
+    width: 12vw;
+    display: flex;
+    flex-direction: column;
+}
+
+nav > a {
+    text-decoration: none;
+    color: black;
+    padding: 7px 14px;
+    margin: 0 10px;
+    border-radius: 10px;
+}
+
+nav > a:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+nav > div:first-of-type {
+    margin-left: 14px;
+}
+
+.container-categorias {
+    /* background-color: chartreuse; */
+    position: fixed;
+    top: 5vh;
+    left: 12vw;
+    right: 0;
+    height: 4vh;
+    display: flex;
+    gap: 10px;
+    padding: 0 10px;
+    padding-bottom: 10px;
+    background-color: white;
+}
+
+.container-categorias > div {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.main {
+    margin-top: 9vh;
+    margin-left: 12vw;
+    padding: 10px;
+}
+
+.container-videos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    row-gap: 25px;
+}
+
+.video {
+    width: 19%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.video > .preview {
+    height: 200px;
+    background-color: aquamarine;
+    border-radius: 10px;
+}
+
+.video .data {
+    display: flex;
+    gap: 10px;
+}
+
+.video .texts {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.video .texts > div:first-child {
+    font-size: 1.25em;
+    font-weight: bold;
+}
+
+.video .texts > :not(div:first-child) {
+    font-size: 0.9em;
+    color: grey;
+}
+
 .icon-menu-container {
     display: flex;
     flex-direction: column;
@@ -94,42 +197,8 @@ form > input[type='submit'] {
     color: white;
 }
 
-.liz{
-    background-color: beige;
-    width: 15vw;
-    position: fixed;
-    top: calc(4.5vh + 10px);
-    bottom: 0;
-}
-
-a {
-    text-decoration: none;
-    color: inherit;
-    transition: all 0.3s ease;
-}
-
-a:hover {
-    display: inline-block;
-    padding: 10px;
-    background-color: gray;
-    color: white;
-    border-radius: 10px;
-    text-decoration: none;
-}
-
-.bari{
-    background-color: plum;
-    height: 5vh;
-    margin-top: 6vh;
-    margin-left: 15vw;
-}
-
-.listas{
-    list-style-type: none;
-    text-align: center;
-    display: flex;
-}
-.bari>ul:hover{
-    display: flex;
-    background-color: gray;
+.sep {
+    height: 1px;
+    margin: 10px 0;
+    background-color: rgba(0, 0, 0, 0.3);
 }
