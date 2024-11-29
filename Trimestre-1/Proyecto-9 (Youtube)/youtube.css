@@ -1,15 +1,20 @@
+:root {
+    --bg-color: rgb(245, 245, 245);
+    --header-height: 5vh;
+}
+
 * {
     box-sizing: border-box;
 }
 
 body {
     margin: 0;
-    height: 1500px;
+    background-color: var(--bg-color);
 }
 
 header {
-    background-color: white;
-    height: 5vh;
+    background-color: var(--bg-color);
+    height: var(--header-height);
     display: flex;
     justify-content: space-between;
     padding: 5px 10px;
@@ -17,6 +22,7 @@ header {
     top: 0;
     left: 0;
     right: 0;
+    z-index: 1000;
 }
 
 header > div {
@@ -64,8 +70,32 @@ form > input[type='submit'] {
     cursor: pointer;
 }
 
+#cb-menu {
+    display: none;
+}
+
+#cb-menu:checked + nav > a > span {
+    display: none;
+}
+
+#cb-menu:checked + nav {
+    width: 5vw;
+}
+
+#cb-menu:checked + nav > a {
+    justify-content: center;
+}
+
+#cb-menu:checked ~ .container-categorias {
+    left: 5vw;
+}
+
+#cb-menu:checked ~ .main {
+    margin-left: 5vw;
+} 
+
 nav {
-    background-color: white;
+    background-color: var(--bg-color);
     position: fixed;
     left: 0;
     top: 5vh;
@@ -81,6 +111,9 @@ nav > a {
     padding: 7px 14px;
     margin: 0 10px;
     border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
 
 nav > a:hover {
@@ -94,7 +127,7 @@ nav > div:first-of-type {
 .container-categorias {
     /* background-color: chartreuse; */
     position: fixed;
-    top: 5vh;
+    top: var(--header-height);
     left: 12vw;
     right: 0;
     height: 4vh;
@@ -102,7 +135,8 @@ nav > div:first-of-type {
     gap: 10px;
     padding: 0 10px;
     padding-bottom: 10px;
-    background-color: white;
+    background-color: var(--bg-color);
+    z-index: 1000;
 }
 
 .container-categorias > div {
@@ -116,20 +150,18 @@ nav > div:first-of-type {
 }
 
 .main {
-    margin-top: 9vh;
+    margin-top: calc(var(--header-height) + 4vh);
     margin-left: 12vw;
     padding: 10px;
 }
 
 .container-videos {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    row-gap: 25px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    gap: 25px;
 }
 
 .video {
-    width: 19%;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -140,11 +172,29 @@ nav > div:first-of-type {
     height: 200px;
     background-color: aquamarine;
     border-radius: 10px;
+    position: relative;
+}
+
+.preview .time {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 7px;
+    font-size: 0.8em;
+    position: absolute;
+    bottom: 7px;
+    right: 7px;
+    display: none;
+}
+
+.preview:hover .time {
+    display: block;
 }
 
 .video .data {
     display: flex;
     gap: 10px;
+    position: relative;
 }
 
 .video .texts {
@@ -161,6 +211,62 @@ nav > div:first-of-type {
 .video .texts > :not(div:first-child) {
     font-size: 0.9em;
     color: grey;
+}
+
+.container-video-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    width: 4vh;
+    height: 4vh;
+    cursor: pointer;
+    position: absolute;
+    top: -1vh;
+    right: -1vh;
+}
+
+.container-video-menu:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.container-video-menu > div {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: black;
+}
+
+
+.menu-video {
+    display: none;
+    background-color: white;
+    width: 10vw;
+    height: auto;
+    border-radius: 10px;
+    position: absolute;
+    top: 4vh;
+    left: 0;
+    z-index: 500;
+    padding: 10px 0;
+}
+
+.menu-video > div {
+    padding: 10px;
+}
+
+.menu-video > div:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.container-video-menu > input {
+    display: none;
+}
+
+.container-video-menu > input:checked + .menu-video {
+    display: block;
 }
 
 .icon-menu-container {
@@ -201,4 +307,69 @@ nav > div:first-of-type {
     height: 1px;
     margin: 10px 0;
     background-color: rgba(0, 0, 0, 0.3);
+}
+
+#bg-mobile {
+    display: none;
+}
+
+@media only screen and (max-width: 600px) {
+    header > form {
+        display: none;
+    }
+
+    header > div:first-child {
+        width: 40%;
+    }
+
+    header > div:last-child {
+        width: 60%;
+    }
+
+    nav {
+        display: none;
+    }
+
+    #cb-menu:checked + nav {
+        display: flex;
+        width: 50vw;
+        z-index: 1500;
+    }
+
+    #cb-menu:checked ~ #bg-mobile {
+        display: block;
+        position: fixed;
+        z-index: 1500;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 50vw;
+        background-color: rgba(0, 0, 0, 0.6);
+    }
+
+    #cb-menu:checked + nav > a > span {
+        display: block;
+    }
+    
+    #cb-menu:checked + nav > a {
+        justify-content: flex-start;
+    }
+
+    .container-categorias {
+        left: 0;
+    }
+
+    .main {
+        margin-left: 0;
+    }
+
+    .container-videos {
+        grid-template-columns: 1fr;
+    }
+
+    .menu-video {
+        width: 60vw;
+        left: auto;
+        right: 0;
+    }
 }
