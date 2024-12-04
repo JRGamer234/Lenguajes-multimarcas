@@ -1,0 +1,51 @@
+a{
+    text-decoration: none;
+    color: black;
+}
+
+/* TOP */
+
+.top{
+    display: flex;
+    width: 100%;
+    height: 40px;
+    justify-content: center;
+    background-color: burlywood;
+}
+.ind{
+    display: flex;
+    gap: 1em;
+    padding: 10px;
+    /* background-color: blue; */
+}
+
+/* Productos */
+
+.esprod{
+    display: grid;
+    width: 100%;
+    height: 600px;
+    background-color: darkseagreen;
+    grid-auto-flow: column;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    justify-content: center;
+}
+.prod{
+    display: grid;
+    width: 250px;
+    height: 200px;
+    background-color: blue;
+    margin-left: 40px;
+    margin-right: 40px;
+    margin-top: 40px;
+}
+.mitad1{
+    display: grid;
+    width: 250px;
+    height: 165px;
+    background-color: red;
+}
+.mitad1 img{
+    width: 100%;
+}
