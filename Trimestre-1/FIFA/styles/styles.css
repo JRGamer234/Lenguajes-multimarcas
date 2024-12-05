@@ -1,0 +1,529 @@
+:root {
+    --menu-top-height: 64px;
+    --menu-lateral-width: 25vw;
+    --banner-height: 100px;
+    --morado: rgb(85, 0, 101);
+    --morado-claro: rgb(102, 25, 126);
+    --dorado: rgb(213, 196, 108);
+    --background-color: rgb(238, 238, 228);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.alpha {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.45);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 50;
+}
+
+body {
+    margin: 0;
+}
+
+.global-menu-top {
+    height: var(--menu-top-height);
+    background-color: var(--morado);
+    display: flex;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    align-items: center;
+}
+
+#cbMenu {
+    display: none;
+}
+
+#cbMenu:checked ~ .left-menu {
+    width: var(--menu-lateral-width);
+}
+
+.global-menu-top >  .left-menu {
+    position: fixed;
+    top: var(--menu-top-height);
+    left: 0;
+    height: calc(100vh - var(--menu-top-height));
+    width: 0%;
+    background-color: var(--morado);
+    transition: width 0.25s linear;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+}
+
+.global-menu-top >  .left-menu > a {
+    color: rgba(255, 255, 255, 0.75);
+    padding: 10px 20px;
+    text-transform: uppercase;
+    width: var(--menu-lateral-width);
+    position: relative;
+}
+
+.global-menu-top >  .left-menu > a > span {
+    position: absolute;
+    right: 30px;
+}
+
+.global-menu-top >  .left-menu > a > .left-submenu {
+    display: none;
+    background-color: var(--morado-claro);
+    position: fixed;
+    top: var(--menu-top-height);
+    left: var(--menu-lateral-width);
+    width: var(--menu-lateral-width);
+    height: calc(100% - var(--menu-top-height));
+}
+
+.global-menu-top >  .left-menu > a:hover > .left-submenu {
+    display: block;
+}
+
+.global-menu-top >  .left-menu > a > .left-submenu > div {
+    color: rgba(255, 255, 255, 0.75);
+    cursor: pointer;
+    padding: 10px 20px;
+}
+
+.global-menu-top >  .left-menu > a > .left-submenu > div:hover {
+    color: rgba(255, 255, 255, 1);
+}
+
+.global-menu-top >  .left-menu > a:hover {
+    color: rgba(255, 255, 255, 1);
+}
+
+.global-menu-top > .menu-icon {
+    margin: 0 20px;
+}
+
+.global-menu-top > .menu-icon > div {
+    width: 20px;
+    height: 2px;
+    background-color: white;
+    margin: 6px 0;
+}
+
+.global-menu-top > a {
+    display: flex;
+    align-items: center;
+    margin: 0 20px;
+}
+
+.global-menu-top > a > img {
+    height: 50px;
+}
+
+.global-menu-top > nav {
+    display: flex;
+}
+
+.global-menu-top > nav > a {
+    color: white;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.global-menu-top > nav > a:hover {
+    color: var(--dorado);
+}
+
+.main {
+    margin-top: var(--menu-top-height);
+    background-color: var(--background-color);
+    padding-bottom: 20px;
+}
+
+.portada {
+    height: calc(100vh - var(--menu-top-height));
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.portada > .subs {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.portada > .subs > .banner {
+    background-image: url("../images/banner.png");
+    background-size: contain;
+    width: 70%;
+    height: var(--banner-height);
+    display: flex;
+    justify-content: center;
+    color: white;
+    padding: 0 200px;
+}
+
+.portada > .subs > .banner > .left {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 1.2em;
+    margin: 10px 0;
+}
+
+.portada > .subs > .banner > .left > * {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.portada > .subs > .banner > .left > div:first-child {
+    font-weight: bold;
+}
+
+.portada > .subs > .banner > .right {
+    display: flex;
+    align-items: center;
+}
+
+.portada > .subs > .banner > .right > div {
+    width: 230px;
+    background-color: white;
+    color: coral;
+    border-radius: 30px;
+    padding: 10px 50px;
+    font-size: 0.8em;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s linear;
+}
+
+.portada > .subs > .banner > .right > div:hover {
+    transform: scale(1.08);
+}
+
+.live {
+    display: flex;
+    color: white;
+    width: 100%;
+}
+
+.live > .left {
+    background-color: var(--morado);
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.live > .left > .reloj {
+    display: flex;
+    justify-content: center;
+}
+
+.live > .left > .reloj > img {
+    width: 60%;
+}
+
+.live > .left > .title {
+    font-size: 1.5rem;
+    text-align: center;
+    margin: 25px 0;
+}
+
+.live > .left > .title > span {
+    color: var(--dorado);
+}
+
+.live > .left > .partido {
+    background-color: white;
+    color: gray;
+    font-size: 0.8rem;
+    padding: 8px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: 5px 0;
+}
+.live > .left > .partido > .fase, .live > .left > .partido > .fecha {
+    width: 50%;
+    margin-bottom: 5px;
+}
+
+.live > .left > .partido > .fecha {
+    text-align: right;
+}
+
+.live > .left > .partido > .lugar {
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.live > .left > .partido > .data {
+    color: black;
+    font-weight: bold;
+    font-size: 1.1rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.live > .left > .partido > .data > .equipos > div:first-child {
+    margin-bottom: 10px;
+}
+
+.live > .left > .partido > .data > .equipos > div {
+    display: flex;
+}
+
+.live > .left > .partido > .data > .equipos > div > img {
+    width: 10%;
+    margin-right: 10px;
+}
+
+.live > .left > .partido > .data > .hora {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.live > .right {
+    width: 80%;
+    background-image: url("../images/jugadores.jpg");
+    background-position: center center;
+    background-size: cover;
+    padding: 30px;
+    display: flex;
+    align-items: flex-end;
+    position: relative;
+}
+
+.live > .right > .texts {
+    width: 75%;
+    position: relative;
+    z-index: 75;
+}
+
+.live > .right > .texts > .title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.live > .right > .texts > .description {
+    font-weight: bold;
+}
+
+.title-last-news {
+    width: 90%;
+    margin: 20px auto 0 auto;
+    font-weight: bold;
+    font-size: 1.7em;
+}
+
+.last-news {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    margin: 20px auto 0 auto;
+}
+
+.last-news > .left {
+    width: 49%;
+    background-image: url("../images/jugadores.jpg");
+    background-position: center center;
+    background-size: cover;
+    padding: 30px;
+    display: flex;
+    align-items: flex-end;
+    position: relative;
+    border-radius: 10px;
+}
+
+.last-news > .left > .alpha {
+    border-radius: 10px;
+}
+
+.last-news > .left > .texts {
+    position: relative;
+    z-index: 75;
+    color: white;
+}
+
+.last-news > .left > .texts > .title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.last-news > .left > .texts > .description {
+    font-weight: bold;
+}
+
+.last-news > .right {
+    display: flex;
+    flex-wrap: wrap;
+    width: 49%;
+}
+
+.last-news > .right > .new {
+    display: flex;
+    width: 100%;
+    padding-bottom: 20px;
+}
+
+.last-news > .right > .new:last-child {
+    padding-bottom: 0;
+}
+
+.last-news > .right > .new > .image {
+    width: 20%;
+}
+
+.last-news > .right > .new > .image > img {
+    width: 100%;
+    height: 100%;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.last-news > .right > .new > .text {
+    padding: 20px;
+    width: 80%;
+    background-color: white;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+footer {
+    background-color: var(--morado);
+    display: flex;
+    color: white;
+    padding: 30px 10%;
+}
+
+footer > div > a {
+    color: white;
+    margin: 0 20px;
+}
+
+footer > .right {
+    width: 40%;
+    text-align: right;
+    font-size: 0.8em;
+}
+
+@media screen and (max-width: 576px) {
+    .global-menu-top {
+        justify-content: center;
+    }
+
+    .global-menu-top > nav {
+        display: none;
+    }
+
+    .global-menu-top > .menu-icon {
+        position: absolute;
+        left: 10px;
+    }
+
+    #cbMenu:checked ~ .left-menu {
+        width: 100vw;
+    }
+
+    .global-menu-top > .left-menu > a {
+        width: 100vw;
+    }
+
+    .global-menu-top >  .left-menu > a > .left-submenu  {
+        position: static;
+        height: auto;
+        width: 100%;
+        background-color: inherit;
+    }
+
+    .portada {
+        height: auto;
+    }
+
+    .live {
+        flex-direction: column;
+    }
+
+    .live > .left, .live > .right {
+        width: 100%;
+    }
+
+    .live > .right > .texts {
+        margin-top: 200px;
+        width: 100%;
+    }
+
+    .portada > .subs > .banner {
+        width: 100%;
+        flex-direction: column;
+        height: auto;
+        padding: 0;
+    }
+    
+    .portada > .subs > .banner > .left > * {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .portada > .subs > .banner > .right {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 15px;
+    }
+
+    .last-news {
+        flex-direction: column;
+    }
+
+    .last-news > .left, .last-news > .right {
+        width: 100%;
+    }
+
+    .last-news > .left > .texts {
+        margin-top: 200px;
+    }
+
+    .last-news > .right > .new:not(:first-child){
+        display: none;
+    }
+
+    .last-news > .right > .new {
+        margin-top: 20px;
+    }
+
+    .last-news > .right > .new > .image {
+        width: 35%;
+    }
+
+    footer {
+        flex-direction: column;
+    }
+
+    footer > .left > a {
+        display: block;
+        text-align: center;
+        margin: 5px 0;
+    }
+
+    footer > .right {
+        margin-top: 15px;
+        width: 100%;
+    }
+}

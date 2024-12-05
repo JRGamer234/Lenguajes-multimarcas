@@ -1,0 +1,394 @@
+:root {
+    --background-hover: rgba(255, 255, 255, 0.15);
+    --nav-width: 25vw;
+    --header-height: calc(50px + 20px);
+    --border-grey: 1px solid rgba(255, 255, 255, 0.15)
+}
+
+* {
+    box-sizing: border-box;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+body {
+    background-color: black;
+    color: white;
+    margin: 0;
+}
+
+nav {
+    width: var(--nav-width);
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    padding-left: 5vw;
+    padding-right: 30px;
+    padding-top: 20px;
+    font-size: 1.4em;
+    border-right: var(--border-grey);
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+nav > .logo {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+nav > .item {
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 30px;
+}
+
+nav > .item:hover {
+    background-color: var(--background-hover);
+}
+
+nav > .btn {
+    background-color: rgb(29, 155, 240);
+    width: 100%;
+    text-align: center;
+}
+
+nav > .btn:hover {
+    background-color: rgba(29, 155, 240, 0.9);
+}
+
+nav > .profile {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    justify-self: flex-end;
+    gap: 20px;
+    width: calc(var(--nav-width) - 5vw - 30px);
+    font-size: 0.8em;
+    position: absolute;
+    bottom: 20px;
+}
+
+nav > .profile > .avatar {
+    width: 50px;
+    height: 50px;
+    background-color: gray;
+    border-radius: 50%;
+}
+
+nav > .profile > .data {
+    display: flex;
+    flex-direction: column;
+}
+
+nav > .profile > .data > div:nth-child(2)  {
+    color: gray;
+}
+
+header {
+    height: var(--header-height);
+    position: fixed;
+    top: 0;
+    left: 25vw;
+    right: 0;
+    display: flex;
+    background-color: black;
+    z-index: 1000;
+}
+
+header > div:first-child {
+    flex-shrink: 0;
+    border-right: var(--border-grey);
+    width: 48vw;
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    padding-left: 10px;
+}
+
+header .btn-back {
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+header .btn-back:hover {
+    background-color: var(--background-hover);
+}
+
+.profile-name {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.profile-name > div:first-child {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.profile-name > div:last-child {
+    font-size: 0.9em;
+    color: grey;
+}
+
+header > div:last-child {
+    display: flex;
+    align-items: center;
+    width: 20vw;
+    padding-left: 25px;
+}
+
+header input {
+    all: unset;
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    width: 100%;
+    padding: 10px 30px;
+    border-radius: 50px;
+    font-size: 1.2em;
+}
+
+.main {
+    width: 48vw;
+    margin-left: var(--nav-width);
+    margin-top: var(--header-height);
+    border-right: var(--border-grey);
+}
+
+.main .profile-background {
+    position: relative;
+}
+
+
+.main .profile-background > img {
+    width: 100%;
+}
+
+.main .profile-img {
+    font-size: 3em;
+    width: 2.2em;
+    height: 2.2em;
+    background-color: black;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: -1.1em;
+    left: 20px;
+    cursor: pointer;
+}
+
+.main .profile-actions {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 20px;
+}
+
+.main .profile-data {
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.main .join-date {
+    font-size: 0.9em;
+    color: grey;
+}
+
+.main .stats {
+    display: flex;
+    font-size: 0.9em;
+}
+
+.main .stats .number {
+    font-weight: bold;
+    margin-right: 4px;
+}
+
+.main .stats .text {
+    color: grey;
+    margin-right: 15px;
+}
+
+.btn-white {
+    background-color: white;
+    color: black;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 30px;
+    font-weight: bold;
+}
+
+.tweet {
+    display: flex;
+    border-top: var(--border-grey);
+    border-bottom: var(--border-grey);
+    padding: 10px 20px;
+    display: flex;
+    gap: 15px;
+}
+
+.tweet .avatar {
+    font-size: 2em;
+    width: 1.2em;
+    height: 1.2em;
+    background-color: black;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.tweet .header {
+    display: flex;
+    gap: 10px;
+}
+
+.tweet .content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.tweet .header .name {
+    font-weight: bold;
+}
+
+.tweet .header .aux, .tweet .stats {
+    color: gray;
+}
+
+.tweet .stats {
+    display: flex;
+    gap: 35px;
+}
+
+.tweet .stats div {
+    cursor: pointer;
+}
+
+.right {
+    width: 20vw;
+    position: fixed;
+    top: var(--header-height);
+    left: 73vw;
+    bottom: 0;
+    padding-left: 25px;
+}
+
+.right .trends-container {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+}
+
+.right .trends-container > * {
+    padding: 10px 15px;
+}
+
+.right .trends-container > .title {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.right .trends-container > .trend {
+    color: gray;
+    cursor: pointer;
+    font-size: 0.85em;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.right .trends-container > .trend:hover {
+    background-color: rgba(255, 255, 255, 0.03);
+}
+
+.right .trends-container > .trend > div:nth-child(2) {
+    color: white;
+    font-weight: bold;
+}
+
+.cookies-container {
+    position: fixed;
+    z-index: 15000;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 30px 100px;
+    display: flex;
+    gap: 50px;
+    background-color: #cecece;
+    color: black;
+}
+
+.cookies-container .text {
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.cookies-container .text .title {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.cookies-container .buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 30%;
+}
+
+.cookies-container .buttons label {
+    cursor: pointer;
+    color: white;
+    background-color: black;
+    cursor: pointer;
+    text-align: center;
+    padding: 10px 30px;
+    border-radius: 30px;
+}
+
+#cbCookies {
+    display: none;
+}
+
+#cbCookies:checked + .cookies-container {
+    display: none;
+}
+
+@media only screen and (max-width: 600px) {
+    nav, header, .right {
+        display: none;
+    }
+
+    .main {
+        margin: 0;
+        width: 100%;
+    }
+
+    .cookies-container {
+        flex-direction: column;
+        gap: 10px;
+        padding: 30px 25px;
+    }
+
+    .cookies-container > div {
+        width: 100% !important;
+    }
+}
