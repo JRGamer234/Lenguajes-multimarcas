@@ -10,7 +10,7 @@ a:hover{
 
 .top{
     display: flex;
-    width: 100%;
+    width: auto;
     height: 40px;
     justify-content: center;
     background-color: burlywood;
@@ -29,7 +29,7 @@ a:hover{
 .esprod{
     position: absolute;
     display: grid;
-    width: 1800px;
+    width: 1383px;
     height: 600px;
     background-color: darkseagreen;
     grid-auto-flow: column;
@@ -42,7 +42,7 @@ a:hover{
 
 .prod{
     display: grid;
-    width: 250px;
+    width: 260px;
     height: 200px;
     background-color: blue;
     margin-left: 40px;
@@ -64,11 +64,37 @@ a:hover{
 .esprodizq{
     display: grid;
     width: 120px;
-    height: 600px;
+    height: 800px;
     background-color: rgb(209, 228, 143);
     
 }
 
 .caja{
+    display: grid;
+    padding : 10px;
+    border: 2px;
+    justify-content: center;
+    position: relative;
+    border-color: black;
+    margin-top: 50%;
+    margin-bottom: 50%;
+}
 
+/* separacion body */
+
+.separacion{
+    position: absolute;
+    width: 1383px;
+    height: 200px;
+    background-color: darkkhaki;
+    margin-left: 120px;
+    margin-top: 600px;
+}
+.coches{
+    display: flex;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-color: aqua;
+    flex-direction: row;    
 }
