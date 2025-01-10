@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 id="titulo1">Hola <i>mundo</i></h1>
+    <h1 id="titulo2">Hola mundo</h1>
+
+    <script>
+        const etiqueta = document.getElementById('titulo');
+        etiqueta.onclick = clickFn;
+
+        function clickFn(){
+            const etiqueta1 = document.getElementById('titulo1');
+            let texto1 = 'Hola mundo';
+            if(etiqueta1.innerHTML == texto){
+                texto1 = 'Adios Mundo';
+            }
+            etiqueta1.innerHTML = texto;
+            const etiqueta2 = document.getElementById('titulo2');
+            let texto2 = 'Hola mundo';
+            if(etiqueta2.innerHTML == texto){
+                texto2 = 'Adios Mundo';
+            }
+            etiqueta2.innerHTML = texto;
+        };
+        
+
+
+    </script>
+</body>
+</html>
