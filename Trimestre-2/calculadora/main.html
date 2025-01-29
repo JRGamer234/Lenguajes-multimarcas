@@ -4,13 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Calculadora</title>
-    <link rel="stylesheet" href="./calc.css" />
+    <link rel="stylesheet" href="calc.css" />
   </head>
   <body>
     <div class="calculadora">
       <div class="pantalla">0</div>
-      <button  id="c" class="btn">C</button>
-      <button  id="borrar" class="btn"><-</button>
+      <button id="c" class="btn">C</button>
+      <button id="borrar" class="btn"><-</button>
       <button class="btn">/</button>
       <button class="btn">*</button>
       <button class="btn">7</button>
@@ -27,8 +27,11 @@
       <button id="igual" class="btn">=</button>
       <button id="cero" class="btn">0</button>
       <button class="btn">.</button>
+      <div class="historial">
+        <div class="historial-titulo">Historial</div>
+        <div id="historial-lista"></div>
+      </div>
     </div>
-
-    <script src="./calc.js"></script>
+    <script src="calc.js"></script>
   </body>
 </html>
