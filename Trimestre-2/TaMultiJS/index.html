@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tablas de Multiplicar</title>
+    <style>
+        .tabla {
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tablas de Multiplicar del 1 al 10</h1>
+    <div id="tablas"></div>
+
+    <script>
+        function mostrarTablas() {
+            let contenido = '';
+            
+            // Generar tablas del 1 al 10
+            for(let i = 1; i <= 10; i++) {
+                contenido += `<div class="tabla">`;
+                contenido += `<h3>Tabla del ${i}</h3>`;
+                
+                // Multiplicar del 1 al 10
+                for(let j = 1; j <= 10; j++) {
+                    contenido += `${i} x ${j} = ${i * j}<br>`;
+                }
+                contenido += `</div>`;
+            }
+            
+            document.getElementById('tablas').innerHTML = contenido;
+        }
+
+        // Mostrar las tablas al cargar la página
+        mostrarTablas();
+    </script>
+</body>
+</html>
