@@ -1,3 +1,33 @@
+const coche1 = {
+    marca: 'Tesla',
+    modelo: 'Cybertruck',
+    km: 2345,
+    revisiones: [2023, 2024],
+    propietario: {
+        nombre: 'Saul',
+        carnet: false
+    }
+}
+
+const coche2 = {
+    marca: 'Honda',
+    modelo: 'Civic Type R',
+    km: 45,
+    revisiones: [2020, 2024],
+    propietario: {
+        nombre: 'Saul',
+        carnet: false
+    }
+}
+
+const coches = [coche1, coche2];
+// coches[0].marca = 'BYD';
+// coches[0].cv = 1000;
+// console.log(coches);
+// console.log(coches[0]);
+// console.log(coches[0].marca);
+
+
 document.addEventListener('DOMContentLoaded', function(event){
     const form = document.getElementsByTagName('form')[0];
     form.onsubmit = envioFormulario;
@@ -9,7 +39,7 @@ function envioFormulario(event){
     const marca = elements.marca.value;
     const modelo = elements.modelo.value;
     event.currentTarget.reset();
-    if(existeCoche(marca, modelo)) return;
+    // if(existeCoche(marca, modelo)) return;
     const tr = document.createElement('tr');
     tr.innerHTML = `
         <td>${marca}</td>
