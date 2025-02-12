@@ -53,6 +53,18 @@ function onClickFormatear(event){
 }
 
 function existeCoche(marca, modelo){
-    // TODO
+    const tabla = document.getElementById('tablaCoches');
+    const filas = tabla.getElementsByTagName('tr');
+    for(const fila of filas){
+        const celdas = filas.getElementsByTagName('td');
+        if(celdas.length < 2)continue;
+        if(
+            celdas[0].innerHTML.toLowerCase() === marca.toLowerCase()
+            &&
+            celdas[1].innerHTML.toLowerCase() === marca.toLowerCase()
+        ){
+            return true;
+        }
+    }
     return false;
 }
