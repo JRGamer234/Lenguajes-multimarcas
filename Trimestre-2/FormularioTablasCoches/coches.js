@@ -21,16 +21,13 @@ const coche2 = {
 }
 
 const coches = [coche1, coche2];
-// coches[0].marca = 'BYD';
-// coches[0].cv = 1000;
-// console.log(coches);
-// console.log(coches[0]);
-// console.log(coches[0].marca);
-
 
 document.addEventListener('DOMContentLoaded', function(event){
     const form = document.getElementsByTagName('form')[0];
     form.onsubmit = envioFormulario;
+    for(const coche of coches){
+        crearFila(coche.marca, coche.modelo);
+    }
 });
 
 function envioFormulario(event){
@@ -40,6 +37,24 @@ function envioFormulario(event){
     const modelo = elements.modelo.value;
     event.currentTarget.reset();
     // if(existeCoche(marca, modelo)) return;
+    
+    // Create new car object and add it to the array
+    const nuevoCoche = {
+        marca: marca,
+        modelo: modelo,
+        km: 0,
+        revisiones: [],
+        propietario: {
+            nombre: '',
+            carnet: false
+        }
+    };
+    coches.push(nuevoCoche);
+    
+    crearFila(marca, modelo);
+}
+
+function crearFila(marca, modelo){
     const tr = document.createElement('tr');
     tr.innerHTML = `
         <td>${marca}</td>
@@ -61,7 +76,23 @@ function envioFormulario(event){
     btnFormatear.onclick = onClickFormatear;
 
     btnEliminar = tr.getElementsByTagName('button')[2];
-    btnEliminar.onclick = e => e.currentTarget.parentNode.parentNode.remove();
+    btnEliminar.onclick = function(e) {
+        const fila = e.currentTarget.parentNode.parentNode;
+        const marca = fila.getElementsByTagName('td')[0].innerHTML;
+        const modelo = fila.getElementsByTagName('td')[1].innerHTML;
+        
+        // Remove from coches array
+        const index = coches.findIndex(coche => 
+            coche.marca.toLowerCase() === marca.toLowerCase() && 
+            coche.modelo.toLowerCase() === modelo.toLowerCase()
+        );
+        if (index > -1) {
+            coches.splice(index, 1);
+        }
+        
+        // Remove from UI
+        fila.remove();
+    };
 }
 
 function onClickSeleccionar(event){
