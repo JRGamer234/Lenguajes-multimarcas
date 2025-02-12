@@ -9,6 +9,11 @@
             table, td, th {
                 border: 1px solid black;
             }
+
+            .seleccionado {
+                background-color: red;
+                color: white;
+            }
         </style>
     </head>
     <body>
@@ -22,10 +27,11 @@
             <input type="submit" value="Añadir">
         </form>
         <br>
-        <table>
+        <table id="tablaCoches">
             <tr>
                 <th>Marca</th>
                 <th>Modelo</th>
+                <th>Acciones</th>
             </tr>
         </table>
     </body>
