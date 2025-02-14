@@ -1,6 +1,7 @@
 const coche1 = {
-    marca: 'Tesla',
-    modelo: 'Cybertruck',
+    id: 1,
+    marca: 'tesla',
+    modelo: 'cybertruck',
     km: 2345,
     revisiones: [2023, 2024],
     propietario: {
@@ -10,8 +11,9 @@ const coche1 = {
 }
 
 const coche2 = {
-    marca: 'Honda',
-    modelo: 'Civic Type R',
+    id: 2,
+    marca: 'honda',
+    modelo: 'civic type r',
     km: 45,
     revisiones: [2020, 2024],
     propietario: {
@@ -26,39 +28,30 @@ document.addEventListener('DOMContentLoaded', function(event){
     const form = document.getElementsByTagName('form')[0];
     form.onsubmit = envioFormulario;
     for(const coche of coches){
-        crearFila(coche.marca, coche.modelo);
+        crearFila(coche);
     }
 });
 
 function envioFormulario(event){
     event.preventDefault();
     const elements = event.currentTarget.elements;
-    const marca = elements.marca.value;
-    const modelo = elements.modelo.value;
+    const marca = elements.marca.value.toLowerCase();
+    const modelo = elements.modelo.value.toLowerCase();
     event.currentTarget.reset();
     // if(existeCoche(marca, modelo)) return;
-    
-    // Create new car object and add it to the array
     const nuevoCoche = {
         marca: marca,
-        modelo: modelo,
-        km: 0,
-        revisiones: [],
-        propietario: {
-            nombre: '',
-            carnet: false
-        }
-    };
+        modelo: modelo
+    }
     coches.push(nuevoCoche);
-    
-    crearFila(marca, modelo);
+    crearFila(nuevoCoche);
 }
 
-function crearFila(marca, modelo){
+function crearFila(coche){
     const tr = document.createElement('tr');
     tr.innerHTML = `
-        <td>${marca}</td>
-        <td>${modelo}</td>
+        <td>${coche.marca}</td>
+        <td>${coche.modelo}</td>
         <td>
             <button>Seleccionar</button>
             <button>Formatear</button>
@@ -76,23 +69,24 @@ function crearFila(marca, modelo){
     btnFormatear.onclick = onClickFormatear;
 
     btnEliminar = tr.getElementsByTagName('button')[2];
-    btnEliminar.onclick = function(e) {
-        const fila = e.currentTarget.parentNode.parentNode;
-        const marca = fila.getElementsByTagName('td')[0].innerHTML;
-        const modelo = fila.getElementsByTagName('td')[1].innerHTML;
-        
-        // Remove from coches array
-        const index = coches.findIndex(coche => 
-            coche.marca.toLowerCase() === marca.toLowerCase() && 
-            coche.modelo.toLowerCase() === modelo.toLowerCase()
-        );
-        if (index > -1) {
-            coches.splice(index, 1);
+    btnEliminar.onclick = borrarCoche;
+}
+
+function borrarCoche(event){
+    const fila = event.currentTarget.parentNode.parentNode;
+    const celdas = fila.getElementsByTagName('td');
+    const marca = celdas[0].innerHTML.toLowerCase();
+    const modelo = celdas[1].innerHTML.toLowerCase();
+    for(const coche of coches){
+        if(coche.marca === marca && coche.modelo === modelo){
+            const index = coches.indexOf(coche);
+            if(index >= 0){
+                coches.splice(index, 1);
+                fila.remove();
+                break;
+            }
         }
-        
-        // Remove from UI
-        fila.remove();
-    };
+    }
 }
 
 function onClickSeleccionar(event){
@@ -128,4 +122,8 @@ function existeCoche(marca, modelo){
         }
     }
     return false;
+}
+
+function getLastId(){
+    
 }
