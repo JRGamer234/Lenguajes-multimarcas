@@ -38,8 +38,9 @@ function envioFormulario(event){
     const marca = elements.marca.value.toLowerCase();
     const modelo = elements.modelo.value.toLowerCase();
     event.currentTarget.reset();
-    // if(existeCoche(marca, modelo)) return;
+    // if(getCoche(marca, modelo)) return;
     const nuevoCoche = {
+        id: getLastId() + 1,
         marca: marca,
         modelo: modelo
     }
@@ -49,6 +50,7 @@ function envioFormulario(event){
 
 function crearFila(coche){
     const tr = document.createElement('tr');
+    tr.setAttribute('id-coche', coche.id);
     tr.innerHTML = `
         <td>${coche.marca}</td>
         <td>${coche.modelo}</td>
@@ -74,17 +76,13 @@ function crearFila(coche){
 
 function borrarCoche(event){
     const fila = event.currentTarget.parentNode.parentNode;
-    const celdas = fila.getElementsByTagName('td');
-    const marca = celdas[0].innerHTML.toLowerCase();
-    const modelo = celdas[1].innerHTML.toLowerCase();
-    for(const coche of coches){
-        if(coche.marca === marca && coche.modelo === modelo){
-            const index = coches.indexOf(coche);
-            if(index >= 0){
-                coches.splice(index, 1);
-                fila.remove();
-                break;
-            }
+    const id = parseInt(fila.getAttribute('id-coche'));
+    const coche = getCocheById(id);
+    if(coche){
+        const index = coches.indexOf(coche);
+        if(index >= 0){
+            coches.splice(index, 1);
+            fila.remove();
         }
     }
 }
@@ -107,23 +105,28 @@ function onClickFormatear(event){
     }
 }
 
-function existeCoche(marca, modelo){
-    const tabla = document.getElementById('tablaCoches');
-    const filas = tabla.getElementsByTagName('tr');
-    for(const fila of filas){
-        const celdas = fila.getElementsByTagName('td');
-        if(celdas.length < 2) continue;
-        if(
-            celdas[0].innerHTML.toLowerCase() === marca.toLowerCase() 
-            && 
-            celdas[1].innerHTML.toLowerCase() === modelo.toLowerCase()
-        ){
-            return true;
+function getCoche(marca, modelo){
+    for(const coche of coches){
+        if(coche.marca === marca && coche.modelo === modelo){
+            return coche;
         }
     }
-    return false;
+}
+
+function getCocheById(id){
+    for(const coche of coches){
+        if(coche.id === id){
+            return coche;
+        }
+    }
 }
 
 function getLastId(){
-    
+    let id = 0;
+    for(const coche of coches){
+        if(coche.id > id){
+            id = coche.id;
+        }
+    }
+    return id;
 }
