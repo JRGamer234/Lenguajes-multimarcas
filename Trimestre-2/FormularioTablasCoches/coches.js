@@ -50,16 +50,29 @@ function envioFormulario(event){
 
 function crearFila(coche){
     const tr = document.createElement('tr');
-    tr.setAttribute('id-coche', coche.id);
-    tr.innerHTML = `
-        <td>${coche.marca}</td>
-        <td>${coche.modelo}</td>
-        <td>
-            <button>Seleccionar</button>
-            <button>Formatear</button>
-            <button>Eliminar</button>
-        </td>
+    coche.fila = tr;
+    tr.dataset.id = coche.id;
+    const tdMarca = document.createElement('td');
+    const tdModelo = document.createElement('td');
+    const tdBotones = document.createElement('td');
+
+    tdMarca.innerHTML = coche.marca;
+    tdModelo.innerHTML = coche.modelo;
+    tdBotones.innerHTML = `
+        <button>Seleccionar</button>
+        <button>Formatear</button>
+        <button>Eliminar</button>
     `;
+
+    tr.appendChild(tdMarca);
+    tr.appendChild(tdModelo);
+    tr.appendChild(tdBotones);
+
+    coche.elements = {
+        marca: tdMarca,
+        modelo: tdModelo,
+        botones: tdBotones
+    };
 
     const tabla = document.getElementById('tablaCoches');
     tabla.appendChild(tr);
@@ -76,7 +89,7 @@ function crearFila(coche){
 
 function borrarCoche(event){
     const fila = event.currentTarget.parentNode.parentNode;
-    const id = parseInt(fila.getAttribute('id-coche'));
+    const id = parseInt(fila.dataset.id);
     const coche = getCocheById(id);
     if(coche){
         const index = coches.indexOf(coche);
@@ -89,19 +102,19 @@ function borrarCoche(event){
 
 function onClickSeleccionar(event){
     const fila = event.currentTarget.parentNode.parentNode;
-    const tabla = fila.parentNode;
-    const filas = tabla.getElementsByTagName('tr');
-    for(const f of filas){
-        if(f !== fila) f.classList.remove('seleccionado');
+    for(const coche of coches){
+        if(coche.fila !== fila) coche.fila.classList.remove('seleccionado');
     }
     fila.classList.toggle('seleccionado');
 }
 
 function onClickFormatear(event){
     const fila = event.currentTarget.parentNode.parentNode;
-    const celdas = fila.getElementsByTagName('td');
-    for(let i=0; i<2; i++){
-        celdas[i].innerHTML = celdas[i].innerHTML.toUpperCase();
+    const id = parseInt(fila.dataset.id);
+    const coche = getCocheById(id);
+    const elementos = ['marca', 'modelo'];
+    for(const e of elementos){
+        coche.elements[e].innerHTML = coche.elements[e].innerHTML.toUpperCase();
     }
 }
 
