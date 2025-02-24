@@ -34,18 +34,29 @@ document.addEventListener('DOMContentLoaded', function(event){
 
 function envioFormulario(event){
     event.preventDefault();
+    const id = parseInt(event.currentTarget.dataset.id);
     const elements = event.currentTarget.elements;
     const marca = elements.marca.value.toLowerCase();
     const modelo = elements.modelo.value.toLowerCase();
     event.currentTarget.reset();
-    // if(getCoche(marca, modelo)) return;
-    const nuevoCoche = {
-        id: getLastId() + 1,
-        marca: marca,
-        modelo: modelo
+    if(id === 0){
+        // if(getCoche(marca, modelo)) return;
+        const nuevoCoche = {
+            id: getLastId() + 1,
+            marca: marca,
+            modelo: modelo
+        }
+        coches.push(nuevoCoche);
+        crearFila(nuevoCoche);
+        return;
     }
-    coches.push(nuevoCoche);
-    crearFila(nuevoCoche);
+    const coche = getCocheById(id);
+    coche.marca = marca;
+    coche.modelo = modelo;
+    coche.elements.marca.innerHTML = marca;
+    coche.elements.modelo.innerHTML = modelo;
+    event.currentTarget.dataset.id = 0;
+    elements.submit.value = 'Añadir';
 }
 
 function crearFila(coche){
@@ -62,6 +73,7 @@ function crearFila(coche){
         <button>Seleccionar</button>
         <button>Formatear</button>
         <button>Eliminar</button>
+        <button>Editar</button>
     `;
 
     tr.appendChild(tdMarca);
@@ -85,6 +97,20 @@ function crearFila(coche){
 
     btnEliminar = tr.getElementsByTagName('button')[2];
     btnEliminar.onclick = borrarCoche;
+
+    btnEditar = tr.getElementsByTagName('button')[3];
+    btnEditar.onclick = onClickEditar;
+}
+
+function onClickEditar(event){
+    const fila = event.currentTarget.parentNode.parentNode;
+    const id = parseInt(fila.dataset.id);
+    const coche = getCocheById(id);
+    const formulario = document.getElementsByTagName('form')[0];
+    formulario.elements.marca.value = coche.marca;
+    formulario.elements.modelo.value = coche.modelo;
+    formulario.elements.submit.value = 'Guardar cambios';
+    formulario.dataset.id = coche.id;
 }
 
 function borrarCoche(event){
