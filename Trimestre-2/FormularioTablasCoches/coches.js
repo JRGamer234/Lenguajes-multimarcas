@@ -28,9 +28,84 @@ document.addEventListener('DOMContentLoaded', function(event){
     const form = document.getElementsByTagName('form')[0];
     form.onsubmit = envioFormulario;
     for(const coche of coches){
-        crearFila(coche);
+        completarObjetoCoche(coche);
+        coche.crearFila();
     }
 });
+
+function completarObjetoCoche(coche){
+    coche.crearFila = function(){
+        this.fila = document.createElement('tr');
+        this.fila.dataset.id = this.id;
+        this.elements = {
+            marca: document.createElement('td'),
+            modelo: document.createElement('td'),
+            botones: document.createElement('td')
+        };
+
+        this.elements.marca.innerHTML = this.marca;
+        this.elements.modelo.innerHTML = this.modelo;
+        this.elements.botones.innerHTML = `
+            <button>Seleccionar</button>
+            <button>Formatear</button>
+            <button>Eliminar</button>
+            <button>Editar</button>
+        `;
+
+        this.fila.appendChild(this.elements.marca);
+        this.fila.appendChild(this.elements.modelo);
+        this.fila.appendChild(this.elements.botones);
+
+        const tabla = document.getElementById('tablaCoches');
+        tabla.appendChild(this.fila);
+
+        btnSeleccionar = this.fila.getElementsByTagName('button')[0];
+        btnSeleccionar.onclick = onClickSeleccionar;
+
+        btnFormatear = this.fila.getElementsByTagName('button')[1];
+        btnFormatear.onclick = onClickFormatear;
+
+        btnEliminar = this.fila.getElementsByTagName('button')[2];
+        btnEliminar.onclick = borrarCoche;
+
+        btnEditar = this.fila.getElementsByTagName('button')[3];
+        btnEditar.onclick = onClickEditar;
+    }
+    coche.borrar = function(){
+        const index = coches.indexOf(this);
+        if(index >= 0){
+            coches.splice(index, 1);
+            this.fila.remove();
+        }
+    }
+    coche.formatear = function(){
+        const elementos = ['marca', 'modelo'];
+        for(const e of elementos){
+            this.elements[e].innerHTML = this.elements[e].innerHTML.toUpperCase();
+        }
+    }
+    coche.seleccionar = function(){
+        for(const coche of coches){
+            if(coche.fila !== this.fila) coche.fila.classList.remove('seleccionado');
+        }
+        this.fila.classList.toggle('seleccionado');
+    }
+    coche.setMarca = function(marca){
+        this.marca = marca;
+        this.elements.marca.innerHTML = marca;
+    }
+    coche.setModelo = function(modelo){
+        this.modelo = modelo;
+        this.elements.modelo.innerHTML = modelo;
+    }
+    coche.cargarEnFormulario = function(){
+        const formulario = document.getElementsByTagName('form')[0];
+        formulario.elements.marca.value = this.marca;
+        formulario.elements.modelo.value = this.modelo;
+        formulario.elements.submit.value = 'Guardar cambios';
+        formulario.dataset.id = this.id;
+    }
+}
 
 function envioFormulario(event){
     event.preventDefault();
@@ -46,102 +121,44 @@ function envioFormulario(event){
             marca: marca,
             modelo: modelo
         }
+        completarObjetoCoche(nuevoCoche);
         coches.push(nuevoCoche);
-        crearFila(nuevoCoche);
+        nuevoCoche.crearFila();
         return;
     }
     const coche = getCocheById(id);
-    coche.marca = marca;
-    coche.modelo = modelo;
-    coche.elements.marca.innerHTML = marca;
-    coche.elements.modelo.innerHTML = modelo;
+    coche.setMarca(marca);
+    coche.setModelo(modelo);
     event.currentTarget.dataset.id = 0;
     elements.submit.value = 'Añadir';
-}
-
-function crearFila(coche){
-    const tr = document.createElement('tr');
-    coche.fila = tr;
-    tr.dataset.id = coche.id;
-    const tdMarca = document.createElement('td');
-    const tdModelo = document.createElement('td');
-    const tdBotones = document.createElement('td');
-
-    tdMarca.innerHTML = coche.marca;
-    tdModelo.innerHTML = coche.modelo;
-    tdBotones.innerHTML = `
-        <button>Seleccionar</button>
-        <button>Formatear</button>
-        <button>Eliminar</button>
-        <button>Editar</button>
-    `;
-
-    tr.appendChild(tdMarca);
-    tr.appendChild(tdModelo);
-    tr.appendChild(tdBotones);
-
-    coche.elements = {
-        marca: tdMarca,
-        modelo: tdModelo,
-        botones: tdBotones
-    };
-
-    const tabla = document.getElementById('tablaCoches');
-    tabla.appendChild(tr);
-
-    btnSeleccionar = tr.getElementsByTagName('button')[0];
-    btnSeleccionar.onclick = onClickSeleccionar;
-
-    btnFormatear = tr.getElementsByTagName('button')[1];
-    btnFormatear.onclick = onClickFormatear;
-
-    btnEliminar = tr.getElementsByTagName('button')[2];
-    btnEliminar.onclick = borrarCoche;
-
-    btnEditar = tr.getElementsByTagName('button')[3];
-    btnEditar.onclick = onClickEditar;
 }
 
 function onClickEditar(event){
     const fila = event.currentTarget.parentNode.parentNode;
     const id = parseInt(fila.dataset.id);
     const coche = getCocheById(id);
-    const formulario = document.getElementsByTagName('form')[0];
-    formulario.elements.marca.value = coche.marca;
-    formulario.elements.modelo.value = coche.modelo;
-    formulario.elements.submit.value = 'Guardar cambios';
-    formulario.dataset.id = coche.id;
+    coche.cargarEnFormulario();
 }
 
 function borrarCoche(event){
     const fila = event.currentTarget.parentNode.parentNode;
     const id = parseInt(fila.dataset.id);
     const coche = getCocheById(id);
-    if(coche){
-        const index = coches.indexOf(coche);
-        if(index >= 0){
-            coches.splice(index, 1);
-            fila.remove();
-        }
-    }
+    coche.borrar();
 }
 
 function onClickSeleccionar(event){
     const fila = event.currentTarget.parentNode.parentNode;
-    for(const coche of coches){
-        if(coche.fila !== fila) coche.fila.classList.remove('seleccionado');
-    }
-    fila.classList.toggle('seleccionado');
+    const id = parseInt(fila.dataset.id);
+    const coche = getCocheById(id);
+    coche.seleccionar();
 }
 
 function onClickFormatear(event){
     const fila = event.currentTarget.parentNode.parentNode;
     const id = parseInt(fila.dataset.id);
     const coche = getCocheById(id);
-    const elementos = ['marca', 'modelo'];
-    for(const e of elementos){
-        coche.elements[e].innerHTML = coche.elements[e].innerHTML.toUpperCase();
-    }
+    coche.formatear();
 }
 
 function getCoche(marca, modelo){
