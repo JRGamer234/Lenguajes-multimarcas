@@ -1,38 +1,57 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Coches</title>
-        <script src="coches.js"></script>
-        <style>
-            table, td, th {
-                border: 1px solid black;
-            }
-
-            .seleccionado {
-                background-color: red;
-                color: white;
-            }
-        </style>
-    </head>
-    <body>
-        <form action="" data-id="0">
-            <label for="txtMarca">Marca:</label>
-            <input type="text" id="txtMarca" name="marca" value="" required>
-            <br>
-            <label for="txtModelo">Modelo:</label>
-            <input type="text" id="txtModelo" name="modelo" value="" required>
-            <br>
-            <input type="submit" name="submit" value="Añadir">
-        </form>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coches</title>
+    <script src="coches.js" defer></script>
+    <style>
+        table, td, th {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 5px;
+        }
+        .seleccionado {
+            background-color: red;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <form action="" data-id="0">
+        <label for="txtMarca">Marca:</label>
+        <input type="text" id="txtMarca" name="marca" required>
         <br>
-        <table id="tablaCoches">
-            <tr>
-                <th>Marca</th>
-                <th>Modelo</th>
-                <th>Acciones</th>
-            </tr>
-        </table>
-    </body>
+        
+        <label for="txtModelo">Modelo:</label>
+        <input type="text" id="txtModelo" name="modelo" required>
+        <br>
+
+        <label for="txtCombustible">Combustible:</label>
+        <input type="text" id="txtCombustible" name="combustible" required>
+        <br>
+
+        <label for="txtConsumo">Consumo (L/100km):</label>
+        <input type="number" id="txtConsumo" name="consumo" step="0.1" required>
+        <br>
+
+        <label for="txtLitros">Litros en tanque:</label>
+        <input type="number" id="txtLitros" name="litros" step="0.1" required>
+        <br>
+
+        <input type="submit" name="submit" value="Añadir">
+    </form>
+    <br>
+    
+    <table id="tablaCoches">
+        <tr>
+            <th>Marca</th>
+            <th>Modelo</th>
+            <th>Combustible</th>
+            <th>Consumo (L/100km)</th>
+            <th>Litros en tanque</th>
+            <th>Acciones</th>
+        </tr>
+    </table>
+</body>
 </html>
