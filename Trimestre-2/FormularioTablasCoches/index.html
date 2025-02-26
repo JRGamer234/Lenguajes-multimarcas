@@ -28,15 +28,15 @@
         <br>
 
         <label for="txtCombustible">Combustible:</label>
-        <input type="text" id="txtCombustible" name="combustible" required>
+        <input type="text" id="txtCombustible" name="combustible" min="0" required>
         <br>
 
         <label for="txtConsumo">Consumo (L/100km):</label>
-        <input type="number" id="txtConsumo" name="consumo" step="0.1" required>
+        <input type="number" id="txtConsumo" name="consumo" step="0.1" min="0" required>
         <br>
 
         <label for="txtLitros">Litros en tanque:</label>
-        <input type="number" id="txtLitros" name="litros" step="0.1" required>
+        <input type="number" id="txtLitros" name="litros" step="0.1" min="0" required>
         <br>
 
         <input type="submit" name="submit" value="Añadir">
