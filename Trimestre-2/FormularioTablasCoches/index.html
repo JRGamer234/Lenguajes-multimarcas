@@ -1,57 +1,88 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coches</title>
-    <script src="coches.js" defer></script>
-    <style>
-        table, td, th {
-            border: 1px solid black;
-            border-collapse: collapse;
-            padding: 5px;
-        }
-        .seleccionado {
-            background-color: red;
-            color: white;
-        }
-    </style>
-</head>
-<body>
-    <form action="" data-id="0">
-        <label for="txtMarca">Marca:</label>
-        <input type="text" id="txtMarca" name="marca" required>
-        <br>
-        
-        <label for="txtModelo">Modelo:</label>
-        <input type="text" id="txtModelo" name="modelo" required>
-        <br>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Coches</title>
+        <script src="coches.js"></script>
+        <style>
+            table, td, th {
+                border: 1px solid black;
+            }
 
-        <label for="txtCombustible">Combustible:</label>
-        <input type="text" id="txtCombustible" name="combustible" min="0" required>
-        <br>
+            .seleccionado {
+                background-color: red;
+                color: white;
+            }
 
-        <label for="txtConsumo">Consumo (L/100km):</label>
-        <input type="number" id="txtConsumo" name="consumo" step="0.1" min="0" required>
-        <br>
+            .containerFormAcciones{
+                position: fixed;
+                top: 0;
+                bottom: 0;
+                right: 0;
+                left: 0;
+                background-color: rgba(0, 0, 0, 0.3);
+                display: flex;
+                justify-content: center;
+                align-items: center;
 
-        <label for="txtLitros">Litros en tanque:</label>
-        <input type="number" id="txtLitros" name="litros" step="0.1" min="0" required>
-        <br>
+                > form {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                    background-color: white;
+                    border-radius: 5px;
+                    text-align: center;
+                    width: 25vw;
+                    padding: 10px;
+                }
+            }
 
-        <input type="submit" name="submit" value="Añadir">
-    </form>
-    <br>
-    
-    <table id="tablaCoches">
-        <tr>
-            <th>Marca</th>
-            <th>Modelo</th>
-            <th>Combustible</th>
-            <th>Consumo (L/100km)</th>
-            <th>Litros en tanque</th>
-            <th>Acciones</th>
-        </tr>
-    </table>
-</body>
+            .oculto {
+                display: none !important;
+            }
+        </style>
+    </head>
+    <body>
+        <form action="" data-id="0">
+            <label for="txtMarca">Marca:</label>
+            <input type="text" id="txtMarca" name="marca" value="" required>
+            <br>
+            <label for="txtModelo">Modelo:</label>
+            <input type="text" id="txtModelo" name="modelo" value="" required>
+            <br>
+            <label for="txtKm">KM:</label>
+            <input type="number" id="txtKm" name="km" min="0" required>
+            <br>
+            <label for="txtConsumo">Consumo:</label>
+            <input type="number" id="txtConsumo" name="consumo" min="0" max="200" required>
+            <br>
+            <label for="txtCombustibleActual">Combustible Actual:</label>
+            <input type="number" id="txtCombustibleActual" name="combustibleActual" min="0" max="1000" required>
+            <br>
+            <label for="txtCombustibleMax">Combustible Maximo:</label>
+            <input type="number" id="txtCombustibleMax" name="combustibleMax" min="0" max="1000" value="" required>
+            <br>
+            <input type="submit" name="submit" value="Añadir">
+        </form>
+        <br>
+        <table id="tablaCoches">
+            <tr>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>KM</th>
+                <th>Consumo (L/100km)</th>
+                <th>Combustible actual (L)</th>
+                <th>Acciones</th>
+            </tr>
+        </table>
+        <div class="oculto containerFormAcciones" id="containerFormMover">
+            <form action="">
+                <h2>Mover X coche</h2>
+                <div>Máximo kilometros: xxx</div>
+                <input type="number" name="km" min="0" value="0" required>
+                <input type="submit" value="Mover">
+            </form>
+        </div>
+    </body>
 </html>
