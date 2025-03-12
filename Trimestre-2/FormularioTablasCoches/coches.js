@@ -140,10 +140,25 @@ function completarObjetoCoche(coche){
         this.km = km;
         this.elements.km.innerHTML = km;
     }
+    coche.setConsumo = function(consumo){
+        this.consumo = consumo;
+        this.elements.consumo.innerHTML = consumo;
+    }
+    coche.setCombustibleActual = function(combustible){
+        this.combustibleActual = combustible;
+        this.elements.combustibleActual.innerHTML = combustible;
+    }
+    coche.setCombustibleMax = function(combustibleMax){
+        this.combustibleMax = combustibleMax;
+    }
     coche.cargarEnFormulario = function(){
         const formulario = document.getElementsByTagName('form')[0];
         formulario.elements.marca.value = this.marca;
         formulario.elements.modelo.value = this.modelo;
+        formulario.elements.km.value = this.km;
+        formulario.elements.consumo.value = this.consumo;
+        formulario.elements.combustibleActual.value = this.combustibleActual;
+        formulario.elements.combustibleMax.value = this.combustibleMax;
         formulario.elements.submit.value = 'Guardar cambios';
         formulario.dataset.id = this.id;
     }
@@ -153,10 +168,17 @@ function completarObjetoCoche(coche){
         formulario.dataset.id = coche.id;
         const titulo = formulario.getElementsByTagName('h2')[0];
         titulo.innerHTML = `Mover ${coche.marca} ${coche.modelo}`.toUpperCase();
+        const divMax = formulario.getElementsByTagName('div')[0];
+        const maxKm = this.combustibleActual / this.consumo * 100;
+        divMax.innerHTML = `Máximo kilómetros: ${maxKm}Km`;
+        formulario.elements.km.setAttribute('max', maxKm);
         container.classList.remove('oculto');
     }
     coche.mover = function(km){
         this.setKm(this.km + km);
+        const gastado = this.consumo * km /100;
+        this.setCombustibleActual(this.combustibleActual - gastado);
+        guardar();
     }
 }
 
@@ -191,6 +213,10 @@ function envioFormulario(event){
     const coche = getCocheById(id);
     coche.setMarca(marca);
     coche.setModelo(modelo);
+    coche.setKm(km);
+    coche.setConsumo(consumo);
+    coche.setCombustibleActual(combustibleActual);
+    coche.setCombustibleMax(combustibleMax);
     event.currentTarget.dataset.id = 0;
     elements.submit.value = 'Añadir';
     guardar();
