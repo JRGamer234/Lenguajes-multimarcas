@@ -1,0 +1,88 @@
+h1{
+    border: 2px solid black;
+    text-align: center;
+    padding: 5px;
+}
+
+#contenedorCarreras{
+    display: flex;
+    gap: 2px;
+    flex-wrap: wrap;
+}
+
+#contenedorCarreras > div{
+    border: 1px solid black;
+    padding: 5px;
+    text-align: center;
+    display: flex;
+    gap: 5px;
+    flex-direction: column;
+}
+
+.datos{
+    display: flex;
+    gap: 5px;
+
+}
+
+.datos > div {
+    border: 1px solid black;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 3px;
+}
+
+.contenedorRuedas > div, .totalVueltas{
+    border: 1px solid black;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    
+}
+
+.contenedorRuedas{
+    display: flex;
+    gap: 5px;
+    flex-direction: column;
+}
+
+.btnRuedas{
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+#overlay{
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.4);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: flex-end;
+    text-align: center;
+}
+
+#overlay > div{
+    background-color: white;
+    width: 20%;
+    height: 100vh;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    
+
+}
+
+#overlay > div > div{
+    padding: 5px;
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+.oculto{
+    display: none!important; 
+}
