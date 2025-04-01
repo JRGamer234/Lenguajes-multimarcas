@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="styles/styles.css">
+        <script src="scripts/script.js"></script>
+    </head>
+    <body>
+        <div class="image-sh">
+            <img src="images/starship.png" alt="Starship Super Heavy">
+        </div>
+        <div class="main">
+            <header>
+                <h1>STARSHIP SUPER HEAVY</h1>
+                <h2>Gestión de Carga</h2>
+            </header>
+            <div id="container-items"></div>
+            <div id="container-resumen">
+                <div>
+                    <div>Masa Total</div>
+                    <div id="totalMasa">2000gr</div>
+                </div>
+                <div>
+                    <div>Precio Total</div>
+                    <div id="totalPrecio">2000$</div>
+                </div>
+                <div>
+                    <div>Carga</div>
+                    <div id="totalCarga">10%</div>
+                </div>
+                <div id="btn-add">Añadir carga</div>
+            </div>
+            <form class="oculto">
+                <div>
+                    <label for="inputNombre">Nombre</label>
+                    <input type="text" name="nombre" id="inputNombre" required autocomplete="off">
+                </div>
+                <div>
+                    <label for="inputMasa">Masa</label>
+                    <input type="number" name="masa" min="0" id="inputMasa" required autocomplete="off">
+                </div>
+                <input type="submit" value="Añadir">
+            </form>
+        </div>
+    </body>
+</html>

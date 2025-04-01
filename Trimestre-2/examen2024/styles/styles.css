@@ -1,0 +1,142 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+.image-sh {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 15vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-sh > img {
+    height: 100%;
+}
+
+.main {
+    margin-left: 15vw;
+    margin-bottom: 10vh;
+}
+
+header {
+    text-align: center;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+}
+
+#container-items {
+    margin: 7px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.item {
+    border: 2px solid black;
+    border-radius: 3px;
+    padding: 7px;
+
+}
+
+.item > .nombre {
+    text-align: center;
+    font-weight: bold;
+    font-size: large;
+}
+
+.eliminar {
+    float: right;
+    cursor: pointer;
+    font-weight: normal;
+}
+
+.eliminar:hover {
+    color: red;
+}
+
+.item > .datos {
+    display: flex;
+    border-top: 1px solid black;
+    margin-top: 7px;
+    padding-top: 7px;
+}
+
+.datos > div {
+    width: 50%;
+    text-align: center;
+}
+
+.datos > :first-child {
+    border-right: 1px solid black;
+}
+
+.datos > div > :first-child {
+    font-weight: bold;
+}
+
+#container-resumen, form {
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    left: 15vw;
+    right: 0;
+    z-index: 1000;
+    background-color: white;
+    height: 10vh;
+}
+
+#container-resumen > div > :first-child {
+    font-weight: bold;
+}
+
+#btn-add {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    cursor: pointer;
+    border: 1px solid black;
+    border-radius: 3px;
+    padding: 10px;
+}
+
+form {
+    z-index: 2000;
+}
+
+form > div {
+    display: flex;
+    flex-direction: column;
+}
+
+form input {
+    text-align: center;
+}
+
+.oculto {
+    display: none !important;
+}
+
+.verde {
+    background-color: green;
+}
+
+.amarillo {
+    background-color: yellow;
+}
+
+.rojo {
+    background-color: red;
+}
