@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorías</title>
+    <link rel="stylesheet" href="./styles/styles.css">
+    <script src="./scripts/script.js"></script>
+</head>
+<body>
+    <h1>Tutorías (JORGE RAMOS GÓMEZ)</h1>
+    <label for="alumno">Alumno:</label>
+    <select id="alumno"></select>
+    <label for="fecha">Fecha:</label>
+    <input type="datetime-local" id="fecha">
+    <button onclick="agregarTutoria()">Programar tutoría</button>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Alumno</th>
+                <th>Fecha</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="tabla"></tbody>
+    </table>
+</body>
+</html>

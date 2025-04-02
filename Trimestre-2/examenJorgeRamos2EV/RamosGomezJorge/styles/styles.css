@@ -1,0 +1,38 @@
+:root {
+    --primary-color: #007BFF;
+    --primary-hover-color: #0056b3;
+    --secondary-color: #28a745;
+    --secondary-hover-color: #218838;
+    --text-color: #333;
+    --background-light: #f4f4f4;
+    --background-hover: #f1f1f1;
+    --border-color: #ddd;
+    --danger-color: #dc3545;
+    --danger-hover-color: #c82333;
+}
+
+h1{
+    text-align: center;
+    font-weight: bolder;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+table {
+    width: 60%;
+    margin: auto;
+    border-collapse: collapse;
+}
+table, th, td {
+    border: 1px solid black;
+    border-style: groove;
+}
+th, td {
+    padding: 8px;
+    text-align: center;
+}
+button {
+    margin: 5px;
+}
