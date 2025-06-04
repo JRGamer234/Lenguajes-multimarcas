@@ -12,7 +12,7 @@ body {
     padding: 20px;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     min-height: 100vh;
 }
 
@@ -21,9 +21,11 @@ body {
     background: white;
     padding: 30px;
     border-radius: 8px;
-    max-width: 500px;
+    max-width: 800px;
     width: 100%;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    max-height: 90vh;
+    overflow-y: auto;
 }
 
 /* Títulos */
@@ -94,6 +96,7 @@ button:hover {
 ul {
     list-style: none;
     padding: 0;
+    margin: 0;
 }
 
 li {
@@ -149,6 +152,11 @@ li button:hover {
     margin: 20px 0;
     display: flex;
     gap: 10px;
+    position: sticky;
+    top: 0;
+    background: white;
+    padding: 10px 0;
+    z-index: 10;
 }
 
 .controles-ordenacion button {
@@ -156,7 +164,7 @@ li button:hover {
 }
 
 .seccion-vehiculo {
-    margin: 25px 0;
+    margin: 20px 0;
     border: 1px solid #ddd;
     border-radius: 6px;
     overflow: hidden;
@@ -168,11 +176,15 @@ li button:hover {
     background-color: #007bff;
     color: white;
     text-align: center;
+    position: sticky;
+    z-index: 5;
 }
 
 .lista-tiempos {
     padding: 0;
     margin: 0;
+    max-height: 500px;
+    overflow-y: auto;
 }
 
 .entrada-tiempo {
@@ -246,14 +258,42 @@ li button:hover {
     text-decoration: underline;
 }
 
+/* Contador de tiempos */
+.contador-tiempos {
+    text-align: center;
+    margin: 10px 0;
+    color: #666;
+    font-size: 14px;
+}
+
+/* Scroll personalizado */
+.lista-tiempos::-webkit-scrollbar {
+    width: 8px;
+}
+
+.lista-tiempos::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.lista-tiempos::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.lista-tiempos::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
 /* Responsive para móviles */
 @media (max-width: 600px) {
     body {
         padding: 10px;
+        align-items: flex-start;
     }
     
     #app {
         padding: 20px;
+        max-height: 95vh;
     }
     
     li {
@@ -292,5 +332,9 @@ li button:hover {
     .fecha {
         grid-column: 2;
         text-align: left;
+    }
+    
+    .lista-tiempos {
+        max-height: 400px;
     }
 }

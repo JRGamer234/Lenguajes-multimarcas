@@ -1,10 +1,6 @@
 <?php
 require_once 'config.php';
 
-if (!checkAuth()) {
-    jsonResponse(['error' => 'No autorizado'], 401);
-}
-
 $circuit_id = $_GET['circuit'] ?? null;
 $order = $_GET['order'] ?? 'mejor';
 
@@ -23,7 +19,6 @@ try {
     }
     
     // Obtener tiempos con información del usuario
-    // Como no tienes campo vehiculo en la tabla Tiempos, usaremos categorías ficticias basadas en los tiempos
     $orderBy = ($order === 'mejor') ? 'ASC' : 'DESC';
     
     $stmt = $pdo->prepare("
@@ -60,7 +55,7 @@ try {
         $seconds = intval($time_parts[2]);
         
         $total_minutes = ($hours * 60) + $minutes;
-        $tiempo_texto = sprintf('%d:%02d:%03d', $total_minutes, $seconds, 0); // Asumiendo 0 milisegundos
+        $tiempo_texto = sprintf('%d:%02d:%03d', $total_minutes, $seconds, 0);
         
         $formatted_time = [
             'id' => $time['id'],

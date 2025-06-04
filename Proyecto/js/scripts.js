@@ -305,7 +305,7 @@ function loadCircuitsForDeletion() {
     
     select.innerHTML = '<option value="">Cargando circuitos...</option>';
     
-    fetch('php/get_circuito.php')
+    fetch('php/get_circuitos.php')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Error en la respuesta del servidor');
@@ -550,12 +550,25 @@ function displayTimes(timesByVehicle) {
     let html = '';
     let totalTimes = 0;
 
+    // Contar tiempos totales
     for (const vehiculo in timesByVehicle) {
         if (timesByVehicle[vehiculo] && timesByVehicle[vehiculo].length > 0) {
             totalTimes += timesByVehicle[vehiculo].length;
+        }
+    }
+
+    // Mostrar contador de tiempos
+    if (totalTimes > 0) {
+        html += `<div class="contador-tiempos">Total de tiempos registrados: <strong>${totalTimes}</strong></div>`;
+    }
+
+    for (const vehiculo in timesByVehicle) {
+        if (timesByVehicle[vehiculo] && timesByVehicle[vehiculo].length > 0) {
             const icono = iconoVehiculo[vehiculo] || "🚘";
+            const cantidadTiempos = timesByVehicle[vehiculo].length;
+            
             html += `<div class="seccion-vehiculo">
-                        <h3>${icono} ${vehiculo}</h3>
+                        <h3>${icono} ${vehiculo} (${cantidadTiempos} tiempos)</h3>
                         <ul class="lista-tiempos">`;
             
             timesByVehicle[vehiculo].forEach((tiempo, index) => {
@@ -611,5 +624,3 @@ function sortByWorst() {
 function refreshCircuits() {
     loadCircuits();
 }
-
-circuitos
