@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles/styles.css">
+    <title>LapTimer - Eliminar Circuito</title>
+</head>
+<body>
+    <div id="app">
+        <h2>Eliminar circuito</h2>
+        <form id="deleteCircuitForm" method="POST" action="php/eliminarcircuitos.php">
+            <select id="circuitoEliminar" name="circuit_id" required>
+                <option value="">Selecciona un circuito</option>
+            </select>
+            <button type="submit" onclick="return confirm('¿Estás seguro de que quieres eliminar este circuito?')">Eliminar</button>
+        </form>
+        <button onclick="window.location.href='dashboard.html'">Volver</button>
+    </div>
+
+    <script src="./js/scripts.js"></script>
+</body>
+</html>

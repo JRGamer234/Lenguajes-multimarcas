@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles/styles.css">
+    <title>LapTimer - Añadir Circuito</title>
+</head>
+<body>
+    <div id="app">
+        <h2>Añadir circuito</h2>
+        <form id="addCircuitForm" method="POST" action="php/anadircircuitos.php">
+            <input type="text" id="nuevoCircuito" name="circuit_name" placeholder="Nombre del circuito" required>
+            <button type="submit">Añadir</button>
+        </form>
+        <button onclick="window.location.href='dashboard.html'">Volver</button>
+    </div>
+
+    <script src="./js/scripts.js"></script></script>
+</body>
+</html>

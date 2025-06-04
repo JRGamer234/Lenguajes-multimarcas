@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles/styles.css">
+    <title>LapTimer - Ver Tiempos</title>
+</head>
+<body>
+    <div id="app">
+        <h2 id="circuit-title">Tiempos en Circuito</h2>
+        
+        <div class="controles-ordenacion">
+            <button onclick="sortByBest()">Ordenar de mejor a peor</button>
+            <button onclick="sortByWorst()">Ordenar de peor a mejor</button>
+        </div>
+        
+        <div id="times-container">
+            <!-- Los tiempos se cargarán aquí -->
+        </div>
+        
+        <button onclick="goBack()">Volver</button>
+    </div>
+
+    <script src="./js/scripts.js"></script>
+</body>
+</html>
