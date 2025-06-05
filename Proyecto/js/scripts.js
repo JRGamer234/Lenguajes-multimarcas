@@ -305,7 +305,7 @@ function loadCircuitsForDeletion() {
     
     select.innerHTML = '<option value="">Cargando circuitos...</option>';
     
-    fetch('php/get_circuitos.php')
+    fetch('php/get_circuito.php')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Error en la respuesta del servidor');
@@ -323,6 +323,8 @@ function loadCircuitsForDeletion() {
 
 function populateCircuitSelect(circuits) {
     const select = document.getElementById('circuitoEliminar');
+    
+    if (!select) return;
     
     select.innerHTML = '<option value="">Selecciona un circuito</option>';
     

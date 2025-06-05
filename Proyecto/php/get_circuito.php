@@ -13,27 +13,60 @@ if (!empty($_GET['debug'])) {
 }
 
 try {
-    // Consulta directa sin procedimiento almacenado
-    $stmt = $pdo->prepare("SELECT id, nombre, ubicacion, longitud FROM Circuitos ORDER BY nombre");
-    $stmt->execute();
-    $circuits = $stmt->fetchAll();
+    // Si se proporciona un ID específico, devolver solo ese circuito
+    $circuit_id = $_GET['id'] ?? null;
     
-    // Si no hay circuitos, devolver array vacío
-    if (!$circuits) {
-        $circuits = [];
+    if ($circuit_id) {
+        // Consulta para un circuito específico
+        $stmt = $pdo->prepare("SELECT id, nombre, ubicacion, longitud FROM Circuitos WHERE id = ?");
+        $stmt->execute([$circuit_id]);
+        $circuit = $stmt->fetch();
+        
+        if (!$circuit) {
+            if (!empty($_GET['debug'])) {
+                echo "Circuito no encontrado con ID: $circuit_id<br>";
+                exit;
+            }
+            http_response_code(404);
+            header('Content-Type: application/json; charset=utf-8');
+            echo json_encode(['error' => 'Circuito no encontrado'], JSON_UNESCAPED_UNICODE);
+            exit;
+        }
+        
+        // Debug información si se solicita
+        if (!empty($_GET['debug'])) {
+            echo "Circuito encontrado:<br>";
+            echo "<pre>" . json_encode($circuit, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "</pre>";
+            exit;
+        }
+        
+        // Respuesta JSON para circuito específico
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode($circuit, JSON_UNESCAPED_UNICODE);
+        
+    } else {
+        // Consulta para todos los circuitos (sin parámetro id)
+        $stmt = $pdo->prepare("SELECT id, nombre FROM Circuitos ORDER BY nombre");
+        $stmt->execute();
+        $circuits = $stmt->fetchAll();
+        
+        // Si no hay circuitos, devolver array vacío
+        if (!$circuits) {
+            $circuits = [];
+        }
+        
+        // Debug información si se solicita
+        if (!empty($_GET['debug'])) {
+            echo "Circuitos encontrados: " . count($circuits) . "<br>";
+            echo "JSON que se enviará:<br>";
+            echo "<pre>" . json_encode($circuits, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "</pre>";
+            exit;
+        }
+        
+        // Respuesta JSON normal
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode($circuits, JSON_UNESCAPED_UNICODE);
     }
-    
-    // Debug información si se solicita
-    if (!empty($_GET['debug'])) {
-        echo "Circuitos encontrados: " . count($circuits) . "<br>";
-        echo "JSON que se enviará:<br>";
-        echo "<pre>" . json_encode($circuits, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "</pre>";
-        exit;
-    }
-    
-    // Respuesta JSON normal
-    header('Content-Type: application/json; charset=utf-8');
-    echo json_encode($circuits, JSON_UNESCAPED_UNICODE);
     
 } catch(PDOException $e) {
     // En caso de error, devolver JSON con error

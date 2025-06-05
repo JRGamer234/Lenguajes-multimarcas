@@ -16,18 +16,18 @@ if (empty($circuit_id) || empty($tiempo) || empty($vehiculo) || empty($fecha)) {
     exit;
 }
 
-// Validar formato de tiempo (mm:ss:dd) - décimas
-if (!preg_match('/^(\d{1,2}):([0-5]?\d):(\d{1,2})$/', $tiempo, $matches)) {
+// Validar formato de tiempo (mm:ss:ddd) - milisegundos
+if (!preg_match('/^(\d{1,2}):([0-5]?\d):(\d{1,3})$/', $tiempo, $matches)) {
     header("Location: ../tiemposcircuito.html?circuit=$circuit_id");
     exit;
 }
 
 $minutes = intval($matches[1]);
 $seconds = intval($matches[2]);
-$decimas = intval($matches[3]);
+$milisegundos = intval($matches[3]);
 
 // Validar rangos
-if ($minutes > 99 || $seconds > 59 || $decimas > 99) {
+if ($minutes > 99 || $seconds > 59 || $milisegundos > 999) {
     header("Location: ../tiemposcircuito.html?circuit=$circuit_id");
     exit;
 }
@@ -61,9 +61,7 @@ try {
     
     $user_id = getCurrentUserId() ?: 1;
     
-    // Insertar tiempo con décimas (convertidas a milisegundos para compatibilidad)
-    $milisegundos = $decimas * 10; // Convertir décimas a milisegundos
-    
+    // Insertar tiempo con milisegundos reales
     $stmt = $pdo->prepare("INSERT INTO Tiempos (usuario_id, circuito_id, tiempo, fecha, milisegundos, tiempo_completo, vehiculo) VALUES (?, ?, ?, ?, ?, ?, ?)");
     $stmt->execute([$user_id, $circuit_id, $time_mysql, $fecha, $milisegundos, $tiempo, $vehiculo]);
     

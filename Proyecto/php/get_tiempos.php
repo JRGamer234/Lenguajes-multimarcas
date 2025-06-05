@@ -18,7 +18,7 @@ try {
         jsonResponse(['error' => 'Circuito no encontrado'], 404);
     }
     
-    // Obtener tiempos con información del usuario
+    // Obtener tiempos con información del usuario y vehículo real
     $orderBy = ($order === 'mejor') ? 'ASC' : 'DESC';
     
     $stmt = $pdo->prepare("
@@ -26,21 +26,19 @@ try {
             t.id,
             t.tiempo,
             t.fecha,
-            u.nombre as username,
-            CASE 
-                WHEN TIME_TO_SEC(t.tiempo) < 60 THEN 'Kart Rotax'
-                WHEN TIME_TO_SEC(t.tiempo) < 120 THEN 'Kart alquiler 390cc'
-                ELSE 'moto'
-            END as vehiculo_categoria
+            t.milisegundos,
+            t.tiempo_completo,
+            t.vehiculo,
+            u.nombre as username
         FROM Tiempos t
         JOIN Usuarios u ON t.usuario_id = u.id
         WHERE t.circuito_id = ?
-        ORDER BY t.tiempo $orderBy
+        ORDER BY t.tiempo $orderBy, t.milisegundos ASC
     ");
     $stmt->execute([$circuit_id]);
     $times = $stmt->fetchAll();
     
-    // Agrupar por categoría de vehículo y formatear tiempos
+    // Inicializar arrays para cada tipo de vehículo
     $times_by_vehicle = [
         'Kart Rotax' => [],
         'Kart alquiler 390cc' => [],
@@ -48,28 +46,49 @@ try {
     ];
     
     foreach ($times as $time) {
-        // Convertir tiempo de MySQL a formato mm:ss:ddd
-        $time_parts = explode(':', $time['tiempo']);
-        $hours = intval($time_parts[0]);
-        $minutes = intval($time_parts[1]);
-        $seconds = intval($time_parts[2]);
+        // Usar el tiempo_completo si está disponible, sino convertir desde tiempo + milisegundos
+        if (!empty($time['tiempo_completo'])) {
+            $tiempo_texto = $time['tiempo_completo'];
+        } else {
+            // Convertir tiempo de MySQL a formato mm:ss:ddd
+            $time_parts = explode(':', $time['tiempo']);
+            $hours = intval($time_parts[0]);
+            $minutes = intval($time_parts[1]);
+            $seconds = intval($time_parts[2]);
+            
+            $total_minutes = ($hours * 60) + $minutes;
+            $milisegundos = $time['milisegundos'] ?? 0;
+            $tiempo_texto = sprintf('%d:%02d:%03d', $total_minutes, $seconds, $milisegundos);
+        }
         
-        $total_minutes = ($hours * 60) + $minutes;
-        $tiempo_texto = sprintf('%d:%02d:%03d', $total_minutes, $seconds, 0);
+        // Calcular tiempo en segundos para ordenación
+        $time_parts = explode(':', $tiempo_texto);
+        $total_seconds = 0;
+        if (count($time_parts) >= 3) {
+            $minutes = intval($time_parts[0]);
+            $seconds = intval($time_parts[1]);
+            $milisegundos = intval($time_parts[2]);
+            $total_seconds = ($minutes * 60) + $seconds + ($milisegundos / 1000);
+        }
         
         $formatted_time = [
             'id' => $time['id'],
             'username' => $time['username'],
             'tiempo_texto' => $tiempo_texto,
             'fecha' => $time['fecha'],
-            'tiempo_segundos' => ($total_minutes * 60) + $seconds
+            'tiempo_segundos' => $total_seconds
         ];
         
-        $vehiculo = $time['vehiculo_categoria'];
-        $times_by_vehicle[$vehiculo][] = $formatted_time;
+        // Usar el vehículo real de la base de datos
+        $vehiculo = $time['vehiculo'];
+        
+        // Asegurarse de que el vehículo esté en nuestras categorías
+        if (array_key_exists($vehiculo, $times_by_vehicle)) {
+            $times_by_vehicle[$vehiculo][] = $formatted_time;
+        }
     }
     
-    // Ordenar cada categoría
+    // Ordenar cada categoría por tiempo
     foreach ($times_by_vehicle as $vehiculo => &$times_list) {
         if ($order === 'mejor') {
             usort($times_list, function($a, $b) {
