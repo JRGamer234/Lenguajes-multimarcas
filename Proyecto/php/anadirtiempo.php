@@ -1,82 +1,33 @@
 <?php
 require_once 'config.php';
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../circuit_list.html');
-    exit;
-}
+// Obtener datos del formulario
+$id_circuito = $_POST['circuit_id'];
+$tiempo = $_POST['tiempo'];
+$vehiculo = $_POST['vehiculo'];
+$fecha = $_POST['fecha'];
 
-$circuit_id = $_POST['circuit_id'] ?? '';
-$tiempo = trim($_POST['tiempo'] ?? '');
-$vehiculo = trim($_POST['vehiculo'] ?? '');
-$fecha = $_POST['fecha'] ?? '';
+// Separar tiempo en partes (mm:ss:ddd)
+$partes = explode(':', $tiempo);
+$minutos = $partes[0];
+$segundos = $partes[1];
+$milisegundos = $partes[2];
 
-if (empty($circuit_id) || empty($tiempo) || empty($vehiculo) || empty($fecha)) {
-    header("Location: ../tiemposcircuito.html?circuit=$circuit_id");
-    exit;
-}
+// Crear tiempo para MySQL
+$tiempo_mysql = "00:" . sprintf('%02d:%02d', $minutos, $segundos);
 
-// Validar formato de tiempo (mm:ss:ddd) - milisegundos
-if (!preg_match('/^(\d{1,2}):([0-5]?\d):(\d{1,3})$/', $tiempo, $matches)) {
-    header("Location: ../tiemposcircuito.html?circuit=$circuit_id");
-    exit;
-}
+// Obtener ID del usuario
+$id_usuario = obtener_id_usuario();
 
-$minutes = intval($matches[1]);
-$seconds = intval($matches[2]);
-$milisegundos = intval($matches[3]);
+// Guardar tiempo
+$sql = "INSERT INTO Tiempos (usuario_id, circuito_id, tiempo, fecha, milisegundos, tiempo_completo, vehiculo) VALUES (?, ?, ?, ?, ?, ?, ?)";
+$consulta = $conexion->prepare($sql);
+$consulta->execute([$id_usuario, $id_circuito, $tiempo_mysql, $fecha, $milisegundos, $tiempo, $vehiculo]);
 
-// Validar rangos
-if ($minutes > 99 || $seconds > 59 || $milisegundos > 999) {
-    header("Location: ../tiemposcircuito.html?circuit=$circuit_id");
-    exit;
-}
+// Guardar auditoría
+$detalle = "Tiempo: $tiempo, Vehiculo: $vehiculo";
+guardar_auditoria($conexion, obtener_id_usuario(), 'INSERT', 'Tiempos', $detalle);
 
-// Validar fecha
-if (strtotime($fecha) > strtotime('today')) {
-    header("Location: ../tiemposcircuito.html?circuit=$circuit_id");
-    exit;
-}
-
-// Validar que el vehículo sea uno de los permitidos
-$vehiculos_permitidos = ['Kart Rotax', 'Kart alquiler 390cc', 'moto'];
-if (!in_array($vehiculo, $vehiculos_permitidos)) {
-    header("Location: ../tiemposcircuito.html?circuit=$circuit_id");
-    exit;
-}
-
-try {
-    // Verificar que el circuito existe
-    $stmt = $pdo->prepare("SELECT nombre FROM Circuitos WHERE id = ?");
-    $stmt->execute([$circuit_id]);
-    $circuit = $stmt->fetch();
-    
-    if (!$circuit) {
-        header("Location: ../tiemposcircuito.html?circuit=$circuit_id");
-        exit;
-    }
-    
-    // Convertir tiempo a formato TIME de MySQL
-    $time_mysql = sprintf('%02d:%02d:%02d', 0, $minutes, $seconds);
-    
-    $user_id = getCurrentUserId() ?: 1;
-    
-    // Insertar tiempo con milisegundos reales
-    $stmt = $pdo->prepare("INSERT INTO Tiempos (usuario_id, circuito_id, tiempo, fecha, milisegundos, tiempo_completo, vehiculo) VALUES (?, ?, ?, ?, ?, ?, ?)");
-    $stmt->execute([$user_id, $circuit_id, $time_mysql, $fecha, $milisegundos, $tiempo, $vehiculo]);
-    
-    // Registrar auditoría
-    if (getCurrentUserId()) {
-        $detalle = sprintf('Tiempo: %s, Circuito: %s, Vehiculo: %s', $tiempo, $circuit['nombre'], $vehiculo);
-        logAuditoria($pdo, getCurrentUserId(), 'INSERT', 'Tiempos', $detalle);
-    }
-    
-    header("Location: ../tiemposcircuito.html?circuit=$circuit_id");
-    exit;
-    
-} catch(PDOException $e) {
-    error_log("Error agregando tiempo: " . $e->getMessage());
-    header("Location: ../tiemposcircuito.html?circuit=$circuit_id");
-    exit;
-}
+// Regresar al circuito
+header("Location: ../tiemposcircuito.html?circuit=$id_circuito");
 ?>

@@ -1,11 +1,13 @@
 <?php
 require_once 'config.php';
 
-$response = [
-    'authenticated' => checkAuth(),
-    'user_id' => getCurrentUserId(),
-    'username' => getCurrentUsername()
+// Crear respuesta
+$respuesta = [
+    'authenticated' => esta_logueado(),
+    'user_id' => obtener_id_usuario(),
+    'username' => obtener_nombre_usuario()
 ];
 
-jsonResponse($response);
+// Enviar JSON
+responder_json($respuesta);
 ?>

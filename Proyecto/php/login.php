@@ -1,45 +1,29 @@
 <?php
 require_once 'config.php';
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../login.html');
-    exit;
-}
+// Obtener datos del formulario
+$usuario = $_POST['username'];
+$password = $_POST['password'];
 
-$username = trim($_POST['username'] ?? '');
-$password = trim($_POST['password'] ?? '');
+// Buscar usuario en la base de datos
+$sql = "SELECT id, nombre, contrasena FROM Usuarios WHERE nombre = ?";
+$consulta = $conexion->prepare($sql);
+$consulta->execute([$usuario]);
+$datos_usuario = $consulta->fetch();
 
-if (empty($username) || empty($password)) {
-    header('Location: ../login.html?error=campos_vacios');
-    exit;
-}
-
-try {
-    // Buscar usuario en la base de datos
-    $stmt = $pdo->prepare("SELECT id, nombre, contrasena FROM Usuarios WHERE nombre = ?");
-    $stmt->execute([$username]);
-    $user = $stmt->fetch();
+// Verificar contraseña
+if ($datos_usuario && $password == $datos_usuario['contrasena']) {
+    // Guardar en sesión
+    $_SESSION['user_id'] = $datos_usuario['id'];
+    $_SESSION['username'] = $datos_usuario['nombre'];
     
-    if ($user && $password === $user['contrasena']) {
-        // Login exitoso
-        $_SESSION['user_id'] = $user['id'];
-        $_SESSION['username'] = $user['nombre'];
-        
-        // Registrar auditoría
-        logAuditoria($pdo, $user['id'], 'LOGIN', 'Usuarios', 'Usuario inició sesión');
-        
-        // Redirigir al menú principal
-        header('Location: ../dashboard.html?user=' . urlencode($user['nombre']));
-        exit;
-    } else {
-        // Login fallido
-        header('Location: ../login.html?error=credenciales_incorrectas');
-        exit;
-    }
+    // Guardar auditoría
+    guardar_auditoria($conexion, $datos_usuario['id'], 'LOGIN', 'Usuarios', 'Usuario inició sesión');
     
-} catch(PDOException $e) {
-    error_log("Error en login: " . $e->getMessage());
-    header('Location: ../login.html?error=error_servidor');
-    exit;
+    // Ir al dashboard
+    header('Location: ../dashboard.html?user=' . $datos_usuario['nombre']);
+} else {
+    // Error de login
+    header('Location: ../login.html?error=credenciales_incorrectas');
 }
 ?>

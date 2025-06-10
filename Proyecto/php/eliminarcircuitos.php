@@ -1,49 +1,29 @@
 <?php
 require_once 'config.php';
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../delete_circuit.html');
-    exit;
-}
+// Obtener ID del circuito
+$id_circuito = $_POST['circuit_id'];
 
-$circuit_id = $_POST['circuit_id'] ?? '';
+// Obtener nombre del circuito
+$sql = "SELECT nombre FROM Circuitos WHERE id = ?";
+$consulta = $conexion->prepare($sql);
+$consulta->execute([$id_circuito]);
+$circuito = $consulta->fetch();
+$nombre_circuito = $circuito['nombre'];
 
-if (empty($circuit_id)) {
-    header('Location: ../delete_circuit.html');
-    exit;
-}
+// Eliminar tiempos del circuito
+$sql = "DELETE FROM Tiempos WHERE circuito_id = ?";
+$consulta = $conexion->prepare($sql);
+$consulta->execute([$id_circuito]);
 
-try {
-    // Obtener información del circuito
-    $stmt = $pdo->prepare("SELECT nombre FROM Circuitos WHERE id = ?");
-    $stmt->execute([$circuit_id]);
-    $circuit = $stmt->fetch();
-    
-    if (!$circuit) {
-        header('Location: ../delete_circuit.html');
-        exit;
-    }
-    
-    $circuit_name = $circuit['nombre'];
-    
-    // Eliminar tiempos asociados si existen
-    $stmt = $pdo->prepare("DELETE FROM Tiempos WHERE circuito_id = ?");
-    $stmt->execute([$circuit_id]);
-    
-    // Eliminar el circuito
-    $stmt = $pdo->prepare("DELETE FROM Circuitos WHERE id = ?");
-    $stmt->execute([$circuit_id]);
-    
-    // Registrar auditoría
-    if (getCurrentUserId()) {
-        logAuditoria($pdo, getCurrentUserId(), 'DELETE', 'Circuitos', 'Se eliminó el circuito: ' . $circuit_name);
-    }
-    
-} catch(PDOException $e) {
-    error_log("Error eliminando circuito: " . $e->getMessage());
-}
+// Eliminar circuito
+$sql = "DELETE FROM Circuitos WHERE id = ?";
+$consulta = $conexion->prepare($sql);
+$consulta->execute([$id_circuito]);
 
-// Siempre redirigir a la lista de circuitos
+// Guardar auditoría
+guardar_auditoria($conexion, obtener_id_usuario(), 'DELETE', 'Circuitos', 'Se eliminó el circuito: ' . $nombre_circuito);
+
+// Ir a lista de circuitos
 header('Location: ../circuit_list.html');
-exit;
 ?>

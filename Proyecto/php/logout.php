@@ -1,15 +1,14 @@
 <?php
 require_once 'config.php';
 
-if (checkAuth()) {
-    // Registrar auditoría de logout
-    logAuditoria($pdo, getCurrentUserId(), 'LOGOUT', 'Usuarios', 'Usuario cerró sesión');
+// Guardar auditoría si está logueado
+if (esta_logueado()) {
+    guardar_auditoria($conexion, obtener_id_usuario(), 'LOGOUT', 'Usuarios', 'Usuario cerró sesión');
 }
 
-// Destruir la sesión
+// Cerrar sesión
 session_destroy();
 
-// Redirigir al login
+// Ir al login
 header('Location: ../login.html?success=sesion_cerrada');
-exit;
 ?>
